@@ -1,0 +1,23 @@
+{
+  "name": "node-google-alerts",
+  "version": "0.0.1",
+  "description": "Create Google Alerts from Node.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/slajax/node-google-alerts.git"
+  },
+  "keywords": [
+    "google",
+    "alerts"
+  ],
+  "author": "Kyle Campbell <mail@slajax.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/slajax/node-google-alerts/issues"
+  },
+  "homepage": "https://github.com/slajax/node-google-alerts"
+}
