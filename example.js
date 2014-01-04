@@ -11,7 +11,7 @@
       type: 'everything',
       interval: 'realtime',
       criteria: 'all',
-      delivery: 'mail@slajax.com'
+      delivery: 'feed'
     },
     function(err, feed_url) {
       console.log(feed_url);
