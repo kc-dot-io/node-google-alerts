@@ -4,7 +4,7 @@ Create custom google alerts from Node.js
 
 ## Installation
 
-`npm install git@github.com:slajax/node-google-alerts.git`
+`npm install node-google-alerts`
 
 ## Usage
 
@@ -29,7 +29,7 @@ Create custom google alerts from Node.js
 
 ```
   wow
-      very very alpha 0.0.1
+      very very alpha 0.0.2
     nice alerts
 ```
 
