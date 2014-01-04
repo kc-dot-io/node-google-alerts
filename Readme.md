@@ -1,16 +1,16 @@
-# node-google-alerts
+# google-alerts
 
 Create custom google alerts from Node.js
 
 ## Installation
 
-`npm install node-google-alerts`
+`npm install google-alerts`
 
 ## Usage
 
 ```javascript
 
-  var ga = require('node-google-alerts');
+  var ga = require('google-alerts');
   var alerts = new ga({ user: 'someone@gmail.com', pass: 'password' });
 
   alerts.create('A new alert with default settings');
