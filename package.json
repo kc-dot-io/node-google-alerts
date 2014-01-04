@@ -1,7 +1,7 @@
 {
   "name": "google-alerts",
-  "version": "0.0.2",
-  "description": "Create Google Alerts from Node.",
+  "version": "0.0.3",
+  "description": "Create custom google alerts from Node.js",
   "main": "index.js",
   "scripts": {},
   "repository": {
