@@ -8,14 +8,16 @@ var _ = require('underscore')
 
 module.exports = function(options) {
 
+  var self = this;
   this.options = extend({
     user: false,
     pass: false
   }, options)
 
-  var self = this;
+  if(!this.options.user || !this.options.pass)
+    throw new Error('google-alerts requires at a user & pass for your google account');
 
-  var values = {
+  var alertValueMap = {
     type: {
       'everything': 7, 'news': 1, 'blogs': 4, 'video': 9, 'discussions': 9, 'books': 22
     },
@@ -27,19 +29,40 @@ module.exports = function(options) {
     }
   };
 
-  this.create = function(cb) {
+  this.create = function(params, cb) {
 
-    var defaults = {
+    var query;
+
+    if(typeof params.query === 'string')
+      query = params.query;
+
+    if(typeof params === 'string')
+      query = params, params = {};
+
+    if(!query || !query.length) {
+      if(typeof cb === 'function') return cb(new Error('google-alerts#create() requires at minimum the alert query - see readme'));
+      else throw new Error('google-alerts#create() requires at minimum the alert query - see readme')
+    }
+
+    var httpDefaults = {
       followRedirect: true,
       followAllRedirects: true,
       strictSSL: false,
       jar: true
     };
 
+    var alertParams = {
+      q: query,
+      t: alertValueMap.type[params.type] || 7,
+      f: alertValueMap.interval[params.interval] || 1,
+      l: alertValueMap.criteria[params.criteria] || 0,
+      e: params.delivery || 'feed'
+    };
+
     async.waterfall([
       function parseLogin(done) {
 
-        var p = extend(defaults, {
+        var p = extend(httpDefaults, {
           uri: 'https://accounts.google.com/ServiceLogin?hl=en&service=alerts&continue=http://www.google.com/alerts/manage'
         });
         request.get(p, done)
@@ -63,7 +86,7 @@ module.exports = function(options) {
       },
       function doLogin(form, done) {
 
-        var p = extend(defaults, {
+        var p = extend(httpDefaults, {
           uri: 'https://accounts.google.com/ServiceLoginAuth',
           form: form
         });
@@ -72,7 +95,7 @@ module.exports = function(options) {
       },
       function parseCreate(res, body, done) {
 
-        var p = extend(defaults, {
+        var p = extend(httpDefaults, {
           uri: 'http://www.google.com/alerts'
         });
         request.get(p, done);
@@ -85,7 +108,7 @@ module.exports = function(options) {
 
         var form = {};
         inputs.each(function(i, el) {
-          form[$(this).attr('name')] = $(this).attr('value');
+          if($(this).attr('name')) form[$(this).attr('name')] = $(this).attr('value');
         });
 
         done(null, form);
@@ -93,15 +116,9 @@ module.exports = function(options) {
       },
       function doCreate(form, done) {
 
-        var p = extend(defaults, {
+        var p = extend(httpDefaults, {
           uri: 'http://www.google.com/alerts/create',
-          form: extend(form, {
-            q: 'slajax.com',
-            t: 7,
-            f: 1,
-            l: 0,
-            e: 'feed'
-          })
+          form: extend(form, alertParams)
         });
 
         request.post(p, function(req, body) {
@@ -113,15 +130,15 @@ module.exports = function(options) {
       function getFeedLink(sent, done) {
 
         if(typeof sent.form.e !== 'undefined' && sent.form.e !== 'feed')
-          return done(null);
+          return done(null, params.delivery);
 
-        var p = extend(defaults, {
+        var p = extend(httpDefaults, {
           uri: 'http://www.google.com/alerts/manage'
         });
 
         request.get(p, function(err, res, body) {
           var $ = cheerio.load(body);
-          var feed = '';
+          var feed = 'No Feed Found';
 
           $('form').find('td.alert-type a').each(function(i, el) {
             if( $(this).html() === sent.form.q )
