@@ -1,5 +1,5 @@
 {
-  "name": "node-google-alerts",
+  "name": "google-alerts",
   "version": "0.0.2",
   "description": "Create Google Alerts from Node.",
   "main": "index.js",
