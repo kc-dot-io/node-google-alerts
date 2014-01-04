@@ -19,5 +19,17 @@
   "bugs": {
     "url": "https://github.com/slajax/node-google-alerts/issues"
   },
-  "homepage": "https://github.com/slajax/node-google-alerts"
+  "homepage": "https://github.com/slajax/node-google-alerts",
+  "dependencies": {
+    "extend": "~1.2.1",
+    "zombie": "~2.0.0-alpha24",
+    "request": "~2.30.0",
+    "jsdom": "~0.8.10",
+    "cheerio": "~0.13.0",
+    "underscore": "~1.5.2",
+    "async": "~0.2.9"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  }
 }
