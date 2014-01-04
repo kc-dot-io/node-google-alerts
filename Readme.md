@@ -25,7 +25,7 @@ Create custom google alerts from Node.js
 
 ```
 
-## Disclaimer
+## Dogeclaimer
 
 ```
   wow
