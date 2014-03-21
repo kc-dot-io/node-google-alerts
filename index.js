@@ -1,4 +1,3 @@
-
 var _ = require('underscore')
   , async = require('async')
   , extend = require('extend')
@@ -142,7 +141,7 @@ module.exports = function(options) {
 
           $('form').find('td.alert-type a').each(function(i, el) {
             if( $(this).html() === sent.form.q )
-              feed = $(this).closest('table').find('.alert-delivery a').attr('href')
+              feed = $(this).closest('tr').find('.alert-delivery a').attr('href')
           });
 
           done(null, feed);
