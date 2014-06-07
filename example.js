@@ -2,7 +2,7 @@
   // Example for how to create a new alert with this module
   // Usage: USER=something@gmail.com PASS=password node example.js
 
-  var ga = require('index');
+  var ga = require('./index.js');
   var alerts = new ga({ user: process.env.USER, pass: process.env.PASS });
 
   alerts
