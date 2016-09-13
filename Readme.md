@@ -2,6 +2,8 @@
 
 Create custom google alerts from Node.js
 
+***Please note, since google updated their alerts UX, this module no longer works. Pull requests welcome!***
+
 ## Installation
 
 `npm install google-alerts`
